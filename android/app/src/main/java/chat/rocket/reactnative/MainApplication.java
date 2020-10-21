@@ -35,6 +35,8 @@ import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.jiguang.plugins.push.JPushModule;
+
 public class MainApplication extends Application implements ReactApplication, INotificationsApplication {
 
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
@@ -83,6 +85,7 @@ public class MainApplication extends Application implements ReactApplication, IN
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    JPushModule.registerActivityLifecycle(this);
   }
 
   @Override

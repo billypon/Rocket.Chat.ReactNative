@@ -6,6 +6,9 @@ import { KeyCommandsEmitter } from 'react-native-keycommands';
 import RNScreens from 'react-native-screens';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 
+import EJSON from 'ejson';
+import JPush from 'jpush-react-native';
+
 import {
 	defaultTheme,
 	newThemeState,
@@ -85,6 +88,19 @@ export default class Root extends React.Component {
 	}
 
 	componentDidMount() {
+		JPush.init();
+		JPush.addNotificationListener(({ extras }) => {
+			if (extras) {
+				extras.sender = extras.sender && JSON.parse(extras.sender);
+				onNotification({
+					getData() {
+						return {
+							data: { ejson: EJSON.stringify(extras) }
+						};
+					}
+				});
+			}
+		});
 		this.listenerTimeout = setTimeout(() => {
 			Linking.addEventListener('url', ({ url }) => {
 				const parsedDeepLinkingURL = parseDeepLinking(url);

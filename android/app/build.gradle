@@ -147,7 +147,9 @@ android {
         versionName "4.11.0"
         vectorDrawables.useSupportLibrary = true
         if (isPlay) {
-            manifestPlaceholders = [BugsnagAPIKey: BugsnagAPIKey as String]
+            manifestPlaceholders = [BugsnagAPIKey: BugsnagAPIKey as String, JPushAppKey: JPushAppKey as String]
+        } else {
+            manifestPlaceholders = [JPushAppKey: JPushAppKey as String]
         }
         missingDimensionStrategy "RNNotifications.reactNativeVersion", "reactNative60" // See note below!
     }
@@ -263,6 +265,9 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.9.0"
     annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
     implementation "com.tencent:mmkv-static:1.2.1"
+
+    compile project(':jpush-react-native')
+    compile project(':jcore-react-native')
 }
 
 // Run this once to be able to run the application with BUCK
