@@ -21,6 +21,8 @@ import java.util.List;
 import chat.rocket.reactnative.generated.BasePackageList;
 import chat.rocket.reactnative.networking.SSLPinningPackage;
 
+import cn.jiguang.plugins.push.JPushModule;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
@@ -67,5 +69,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    JPushModule.registerActivityLifecycle(this);
   }
 }

@@ -5,6 +5,7 @@ import { Q } from '@nozbe/watermelondb';
 import AsyncStorage from '@react-native-community/async-storage';
 import { sanitizedRaw } from '@nozbe/watermelondb/RawRecord';
 import RNFetchBlob from 'rn-fetch-blob';
+import JPush from 'jpush-react-native';
 
 import defaultSettings from '../constants/settings';
 import log from '../utils/log';
@@ -653,9 +654,14 @@ const RocketChat = {
 			// Do nothing
 		}
 	},
+	getRegisterId() {
+		return new Promise(resolve => {
+			JPush.getRegistrationID(({ registerID }) => resolve(registerID));
+		});
+	},
 	registerPushToken() {
 		return new Promise(async resolve => {
-			const token = getDeviceToken();
+			const token = getDeviceToken() || (this.registerId = await this.getRegisterId());
 			if (token) {
 				const type = isIOS ? 'apn' : 'gcm';
 				const data = {
@@ -674,7 +680,7 @@ const RocketChat = {
 		});
 	},
 	removePushToken() {
-		const token = getDeviceToken();
+		const token = getDeviceToken() || this.registerId;
 		if (token) {
 			// RC 0.60.0
 			return this.sdk.del('push.token', { token });
