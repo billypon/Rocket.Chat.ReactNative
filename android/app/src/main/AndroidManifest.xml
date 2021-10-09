@@ -75,6 +75,7 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
+        <meta-data android:name="com.bugsnag.android.API_KEY" android:value="${BugsnagAPIKey}" />
         <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>
         <meta-data android:name="JPUSH_CHANNEL" android:value="default"/>
     </application>
