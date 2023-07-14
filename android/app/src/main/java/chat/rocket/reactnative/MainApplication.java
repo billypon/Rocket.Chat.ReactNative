@@ -26,6 +26,8 @@ import java.util.List;
 import chat.rocket.reactnative.newarchitecture.MainApplicationReactNativeHost;
 import chat.rocket.reactnative.networking.SSLPinningPackage;
 
+import cn.jiguang.plugins.push.JPushModule;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(this, new ReactNativeHost(this) {
@@ -79,6 +81,7 @@ public class MainApplication extends Application implements ReactApplication {
     // If you opted-in for the New Architecture, we enable the TurboModule system
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
+    JPushModule.registerActivityLifecycle(this);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
   }

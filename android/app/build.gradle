@@ -150,7 +150,7 @@ android {
         versionName "4.39.0"
         vectorDrawables.useSupportLibrary = true
         if (!isFoss) {
-            manifestPlaceholders = [BugsnagAPIKey: BugsnagAPIKey as String]
+            manifestPlaceholders = [BugsnagAPIKey: BugsnagAPIKey as String, JPUSH_APPKEY: JPUSH_APPKEY as String]
             missingDimensionStrategy "RNNotifications.reactNativeVersion", "reactNative60" // See note below!
         }
         resValue "string", "rn_config_reader_custom_package", "chat.rocket.reactnative"
@@ -380,6 +380,9 @@ dependencies {
     androidTestImplementation('com.wix:detox:+')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.facebook.soloader:soloader:0.10.4'
+
+    implementation project(':jpush-react-native')
+    implementation project(':jcore-react-native')
 }
 
 if (isNewArchitectureEnabled()) {

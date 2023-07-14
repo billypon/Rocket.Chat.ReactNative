@@ -13,6 +13,9 @@
 
     <!-- permissions related to jitsi call -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <permission android:name="chat.rocket.reactnative.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="chat.rocket.reactnative.permission.JPUSH_MESSAGE" />
     
     <application
         android:name="chat.rocket.reactnative.MainApplication"
@@ -78,5 +81,7 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
+        <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>
+        <meta-data android:name="JPUSH_CHANNEL" android:value="default"/>
     </application>
 </manifest>

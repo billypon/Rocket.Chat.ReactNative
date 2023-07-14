@@ -5,6 +5,8 @@ import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-c
 import RNScreens from 'react-native-screens';
 import { Provider } from 'react-redux';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import EJSON from 'ejson';
+import JPush from 'jpush-react-native';
 
 import { appInit, appInitLocalSettings, setMasterDetail as setMasterDetailAction } from './actions/app';
 import { deepLinkingOpen } from './actions/deepLinking';
@@ -109,6 +111,19 @@ export default class Root extends React.Component<{}, IState> {
 	}
 
 	componentDidMount() {
+    JPush.init();
+    JPush.addNotificationListener(({ extras }) => {
+      if (extras) {
+        extras.sender = extras.sender && JSON.parse(extras.sender);
+        onNotification({
+          getData() {
+            return {
+              data: { ejson: EJSON.stringify(extras) }
+            };
+          }
+        });
+      }
+    });
 		this.listenerTimeout = setTimeout(() => {
 			Linking.addEventListener('url', ({ url }) => {
 				const parsedDeepLinkingURL = parseDeepLinking(url);
